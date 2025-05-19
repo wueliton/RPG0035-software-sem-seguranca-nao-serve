@@ -1,0 +1,1013 @@
+{
+	"info": {
+		"_postman_id": "8a2899b6-b93a-418f-81e3-57e3fc94c3dd",
+		"name": "RPG0035",
+		"description": "Serviço utilizado no exercício da atividade RPG0035 Software sem segurança não serve.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14469937"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"pm.collectionVariables.set('authToken', response.sessionid);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@dominio.com\",\n    \"password\": \"123456789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "### Auth Login\n\nEsse endpoint é responsável por criar uma sessão para o usuário.\n\n#### Request Body\n\n- `email` (string) - E-mail do usuário.\n    \n- `password` (string) - Senha do usuário.\n    \n\n#### Response\n\nUma vez que a autenticação retorne sucesso, o servidor responde com um status code 200 e um objeto JSON contendo o session id do usuário.\n\nExamplo de Resposta:\n\n``` json\n{\n    \"sessionid\": \"example_session_id\"\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "Sem e-mail e password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"\",\n    \"password\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "40"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"28-ZiktuHucksS1+LW2SYuaWrEausA\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 19 May 2025 00:24:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"E-mail ou Senha inválidos\"\n}"
+						},
+						{
+							"name": "E-mail Inválido",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"teste\",\n    \"password\": \"a\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e-CMJyqlPgUZ3fWE9/leCC/r2PSWw\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 19 May 2025 00:25:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"E-mail inválido\"\n}"
+						},
+						{
+							"name": "Senha menor que 3 caracteres",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"teste@gmail.com\",\n    \"password\": \"a\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "40"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"28-llpmsFEyqJmrM37lX9N2zYL4U2c\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 19 May 2025 00:26:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Senha no formato inválido\"\n}"
+						},
+						{
+							"name": "Dados Inválidos",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"teste@gmail.com\",\n    \"password\": \"12345\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "40"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"28-ZiktuHucksS1+LW2SYuaWrEausA\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 19 May 2025 00:26:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"E-mail ou Senha inválidos\"\n}"
+						},
+						{
+							"name": "Dados válidos",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"user@dominio.com\",\n    \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "167"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a7-8P1AY4p2JtfpHnRPPKoMsZkrfc8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 19 May 2025 00:27:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"sessionid\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxMjMsImlhdCI6MTc0NzYxNDQzMywiZXhwIjoxNzQ3NjE0NTUzfQ.NlDDjx-pn0R2Q_EyFMmawz7MWRbNsMDUhE1I2wdvGG4\"\n}"
+						},
+						{
+							"name": "Dados válidos administrador",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"admin@dominio.com\",\n    \"password\": \"123456789\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "167"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a7-hKQacrhBWnWtXFZkiRZ1s6tYJAA\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 19 May 2025 01:03:05 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"sessionid\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxMjQsImlhdCI6MTc0NzYxNjU4NSwiZXhwIjoxNzQ3NjE2NzA1fQ.aWNQikbaMT80iF0qaxYmIC-GV7XjZ3wQBv4Ji8BR_Vo\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints responsável pela autenticação dos usuários no serviço."
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "My User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/my",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"my"
+							]
+						},
+						"description": "Esse endpoint faz uma consulta GET para obter os dados do usuário logado. Retorna um JSON como resposta incluídos os dados do usuário:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"username\": {\n            \"type\": \"string\"\n        },\n        \"email\": {\n            \"type\": \"string\"\n        },\n        \"perfil\": {\n            \"type\": \"string\"\n        },\n        \"id\": {\n            \"type\": \"integer\"\n        }\n    }\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "Dados válidos",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/my",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"my"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "61"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3d-tCJikJGjRRyEs8WZ+/Ts9BFqGas\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 19 May 2025 00:43:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"username\": \"user\",\n    \"email\": \"123456\",\n    \"perfil\": \"user\",\n    \"id\": 123\n}"
+						},
+						{
+							"name": "Token inválido",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/my",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"my"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "29"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d-BHTA3HiPT98kwUH0sp98rLt8PsE\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 19 May 2025 00:44:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Não autorizado\"\n}"
+						},
+						{
+							"name": "Sem Token",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/my",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"my"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "36"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"24-qdGe09gXfafaxtd+ojZvL9DUSpw\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 19 May 2025 00:46:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Acesso Não autorizado\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "Esse endpoint retorna a lista de usuários cadastrados. A requisição requer que o usuário possua acesso do tipo `admin`.\n\n### Response\n\nA resposta inclui os dados dos usuários cadastrados no sistema, contendo as seguintes propriedades:\n\n- `username`: Nome do usuáiro.\n    \n- `id`: Identificador único do usuário.\n    \n- `email`: E-mail do usuário.\n    \n- `perfil`: Tipo de perfil do usuário, podendo ser `user`ou `admin`.\n    \n\n#### Example\n\n``` json\n[\n    {\n        \"username\": \"\",\n        \"id\": 0,\n        \"email\": \"\",\n        \"perfil\": \"\"\n    }\n]\n\n ```"
+					},
+					"response": [
+						{
+							"name": "Perfil de acesso não autorizado",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "36"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"24-qdGe09gXfafaxtd+ojZvL9DUSpw\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 19 May 2025 00:50:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Acesso Não autorizado\"\n}"
+						},
+						{
+							"name": "Dados válidos",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "222"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"de-9JnKzvBYdAteBAA2rRUz0wCGYTg\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 19 May 2025 00:51:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"username\": \"user\",\n        \"id\": 123,\n        \"email\": \"user@dominio.com\",\n        \"perfil\": \"user\"\n    },\n    {\n        \"username\": \"admin\",\n        \"id\": 124,\n        \"email\": \"admin@dominio.com\",\n        \"perfil\": \"admin\"\n    },\n    {\n        \"username\": \"colab\",\n        \"id\": 125,\n        \"email\": \"colab@dominio.com\",\n        \"perfil\": \"user\"\n    }\n]"
+						}
+					]
+				}
+			],
+			"description": "Endpoints responsáveis por listar ou consultar dados dos usuários do sistema."
+		},
+		{
+			"name": "Contracts",
+			"item": [
+				{
+					"name": "contracts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/contracts/:empresa/:inicio",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contracts",
+								":empresa",
+								":inicio"
+							],
+							"variable": [
+								{
+									"key": "empresa",
+									"value": "teste"
+								},
+								{
+									"key": "inicio",
+									"value": "2025"
+								}
+							]
+						},
+						"description": "Esse endpoint retorna a lista de contratos de uma empresa com base na `empresa` e no ano de `inicio.`\n\n### Response\n\nA resposta inclui os dados dos contratos e a consulta SQL que foi executada.\n\n#### Example\n\n``` json\n{\n    \"result\": [],\n    \"query\": \"\"\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "Tentativa SQL Injection",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/contracts/:empresa/:inicio",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"contracts",
+										":empresa",
+										":inicio"
+									],
+									"variable": [
+										{
+											"key": "empresa",
+											"value": "' or '1'='1--"
+										},
+										{
+											"key": "inicio",
+											"value": "2025"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "112"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"70-ZtdBDWzkvjSyL7bmWkPp/CSX+Bk\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 19 May 2025 01:02:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": [],\n    \"query\": \"Select * from contracts Where empresa = '\\\\' or \\\\'1\\\\'=\\\\'1--' And data_inicio = '2025'\"\n}"
+						},
+						{
+							"name": "Dados válidos",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/contracts/:empresa/:inicio",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"contracts",
+										":empresa",
+										":inicio"
+									],
+									"variable": [
+										{
+											"key": "empresa",
+											"value": "teste"
+										},
+										{
+											"key": "inicio",
+											"value": "2025"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "96"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"60-7NhZrdXcxDbfIVQnEIqUoIwTkmE\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 19 May 2025 01:03:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": [],\n    \"query\": \"Select * from contracts Where empresa = 'teste' And data_inicio = '2025'\"\n}"
+						},
+						{
+							"name": "Perfil de acesso inválido",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/contracts/:empresa/:inicio",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"contracts",
+										":empresa",
+										":inicio"
+									],
+									"variable": [
+										{
+											"key": "empresa",
+											"value": "teste"
+										},
+										{
+											"key": "inicio",
+											"value": "2025"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "36"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"24-rBeaM6pefE7XtfD4x2eU/mByNlM\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 19 May 2025 01:03:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Acesso não autorizado\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Coleção para administração dos contratos ativos."
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api",
+			"type": "string"
+		},
+		{
+			"key": "authToken",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
